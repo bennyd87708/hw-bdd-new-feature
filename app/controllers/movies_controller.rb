@@ -44,13 +44,12 @@ class MoviesController < ApplicationController
     # Your code here #
     id = params[:id]
     @movie = Movie.find(id)
-    @new_movies = @movie.others_by_same_director
-    if not @new_movies.nil?
-      @director = @movie.director
-      @movies = @new_movies
-    else
-      flash[:warning] = "Director unknown."
+    @director = @movie.director
+    if @director == ""
+      flash[:warning] = "'#{@movie.title}' has no director info."
       redirect_to movies_path
+    else
+      @movies = @movie.others_by_same_director
     end
   end
 
