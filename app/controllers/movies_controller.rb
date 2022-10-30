@@ -42,6 +42,16 @@ class MoviesController < ApplicationController
   # Write your show_by_director method here
   def show_by_director
     # Your code here #
+    id = params[:id]
+    @movie = Movie.find(id)
+    @new_movies = @movie.others_by_same_director
+    if not @new_movies.nil?
+      @director = @movie.director
+      @movies = @new_movies
+    else
+      flash[:warning] = "Director unknown."
+      redirect_to movies_path
+    end
   end
 
   private
@@ -49,6 +59,6 @@ class MoviesController < ApplicationController
   #### Part 1 ####
   # You may need to modify other private methods.
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 end

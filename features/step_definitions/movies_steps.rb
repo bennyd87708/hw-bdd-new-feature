@@ -27,3 +27,6 @@ end
 #### Part 2 ####
 # Write additional step here
 # Your code here
+Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |movie, director|
+  expect(Movie.find_by_title(movie).director).to eq director
+end
